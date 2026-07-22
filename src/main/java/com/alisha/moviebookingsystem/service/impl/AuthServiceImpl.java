@@ -5,6 +5,7 @@ import com.alisha.moviebookingsystem.dto.request.RegisterRequest;
 import com.alisha.moviebookingsystem.dto.response.AuthResponse;
 import com.alisha.moviebookingsystem.entity.User;
 import com.alisha.moviebookingsystem.enums.RoleType;
+import com.alisha.moviebookingsystem.exception.DuplicateResourceException;
 import com.alisha.moviebookingsystem.repository.UserRepository;
 import com.alisha.moviebookingsystem.security.JwtService;
 import com.alisha.moviebookingsystem.service.interfaces.AuthService;
@@ -27,7 +28,7 @@ public class AuthServiceImpl implements AuthService {
     public AuthResponse register(RegisterRequest request) {
 
         if (userRepository.findByEmail(request.getEmail()).isPresent()) {
-            throw new IllegalArgumentException("Email already registered");
+            throw new DuplicateResourceException("Email already registered");
         }
 
         User user = User.builder()
