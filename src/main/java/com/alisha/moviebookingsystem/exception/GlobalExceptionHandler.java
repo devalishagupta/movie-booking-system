@@ -45,6 +45,18 @@ public class GlobalExceptionHandler {
                 );
     }
 
+    @ExceptionHandler(DuplicateResourceException.class)
+    public ResponseEntity<ApiResponse<Void>> handleDuplicateResource(DuplicateResourceException ex){
+
+        return ResponseEntity
+                .status(HttpStatus.IM_USED)
+                .body(
+                        ApiResponse.failure(
+                                ex.getMessage()
+                        )
+                );
+    }
+
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ApiResponse<Void>> handleException(Exception ex){
 
@@ -56,4 +68,5 @@ public class GlobalExceptionHandler {
                         )
                 );
     }
+
 }
